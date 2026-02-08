@@ -1,11 +1,11 @@
 "use client";
 
 import Link from 'next/link';
-import { ShieldCheck, LayoutDashboard, LineChart, Target, History, Settings as SettingsIcon, Sparkles, User as UserIcon } from 'lucide-react';
+import { ShieldCheck, LayoutDashboard, LineChart, Target, History, Settings as SettingsIcon, Sparkles, User as UserIcon, LogOut } from 'lucide-react';
 import { useUser } from "@/context/UserContext";
 
 export default function Navbar() {
-    const { userProfile, isLoaded } = useUser();
+    const { userProfile, isLoaded, resetProfile } = useUser();
 
     return (
         <nav
@@ -96,19 +96,41 @@ export default function Navbar() {
                                 </button>
                             </Link>
                         ) : (
-                            <div style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '10px',
-                                background: 'rgba(255, 255, 255, 0.2)',
-                                padding: '8px 16px',
-                                borderRadius: '12px',
-                                color: 'white',
-                                fontWeight: '800',
-                                fontSize: '0.9rem',
-                                border: '1px solid rgba(255, 255, 255, 0.3)'
-                            }}>
-                                <UserIcon size={16} /> PROFILE
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                                <div style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '10px',
+                                    background: 'rgba(255, 255, 255, 0.15)',
+                                    padding: '8px 16px',
+                                    borderRadius: '12px',
+                                    color: 'white',
+                                    fontWeight: '800',
+                                    fontSize: '0.9rem',
+                                    border: '1px solid rgba(255, 255, 255, 0.2)'
+                                }}>
+                                    <UserIcon size={16} /> {userProfile.name.toUpperCase() || "PROFILE"}
+                                </div>
+                                <button
+                                    onClick={resetProfile}
+                                    style={{
+                                        background: 'rgba(0, 0, 0, 0.2)',
+                                        border: 'none',
+                                        color: 'white',
+                                        padding: '8px',
+                                        borderRadius: '8px',
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        transition: 'all 0.2s ease'
+                                    }}
+                                    onMouseOver={(e) => e.currentTarget.style.background = 'rgba(0, 0, 0, 0.4)'}
+                                    onMouseOut={(e) => e.currentTarget.style.background = 'rgba(0, 0, 0, 0.2)'}
+                                    title="Logout"
+                                >
+                                    <LogOut size={18} />
+                                </button>
                             </div>
                         )
                     ) : (
