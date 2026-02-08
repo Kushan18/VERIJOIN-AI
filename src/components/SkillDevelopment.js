@@ -52,7 +52,7 @@ export default function SkillDevelopment() {
             "Low-Level": ["C", "C++", "Hardware", "Python"]
         };
         const keywords = skillKeywords[course.category] || [];
-        return userProfile.skills.some(skill => keywords.includes(skill));
+        return (userProfile.skills || []).some(skill => keywords.includes(skill));
     };
     return (
         <section id="courses" style={{ padding: '100px 20px', background: 'var(--bg-primary)' }}>

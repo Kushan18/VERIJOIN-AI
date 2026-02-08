@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import { ShieldCheck, LayoutDashboard, LineChart, Target, History, Settings as SettingsIcon, Sparkles, User as UserIcon, LogOut } from 'lucide-react';
+import { ShieldCheck, LayoutDashboard, LineChart, Target, History, Settings as SettingsIcon, Sparkles, User as UserIcon, LogOut, Heart } from 'lucide-react';
 import { useUser } from "@/context/UserContext";
 
 export default function Navbar() {
@@ -65,6 +65,7 @@ export default function Navbar() {
                     <NavLink href="/verify" icon={<LayoutDashboard size={18} />} label="Dash" />
                     <NavLink href="/intelligence" icon={<LineChart size={18} />} label="Market" />
                     <NavLink href="/strategy" icon={<Target size={18} />} label="Strategy" />
+                    <NavLink href="/about" icon={<Heart size={18} />} label="Story" />
                     <NavLink href="/history" icon={<History size={18} />} label="Vault" />
                     <NavLink href="/settings" icon={<SettingsIcon size={18} />} label="Account" />
 
@@ -109,7 +110,7 @@ export default function Navbar() {
                                     fontSize: '0.9rem',
                                     border: '1px solid rgba(255, 255, 255, 0.2)'
                                 }}>
-                                    <UserIcon size={16} /> {userProfile.name.toUpperCase() || "PROFILE"}
+                                    <UserIcon size={16} /> {(userProfile.name || "").toUpperCase() || "PROFILE"}
                                 </div>
                                 <button
                                     onClick={resetProfile}

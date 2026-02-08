@@ -18,9 +18,9 @@ export default function ChatAgent() {
         if (messages.length === 0) {
             const userName = userProfile.name ? userProfile.name.split(" ")[0] : "there";
             setMessages([
-                { id: 1, text: `Hi ${userName}! I'm your VeriJoin Career Assistant. 🚀`, sender: "bot" },
-                { id: 2, text: "VeriJoin is built to help you bridge the gap between your offer and your first day. We verify your career status and recommend skills to keep you ahead.", sender: "bot" },
-                { id: 3, text: "I'd love to learn more about you. What are your current career goals? (Also, have you checked out our 'Mastering AI Agents' course in the Skill Hub?)", sender: "bot" }
+                { id: 1, text: `Hi ${userName}! I'm VeriJoin's Trust Agent, powered by Gemini 3. 🚀`, sender: "bot" },
+                { id: 2, text: "I use an agent-driven architecture to analyze your offer letters, detect delays, and recommend personalized career paths.", sender: "bot" },
+                { id: 3, text: "I can help you find trusted part-time jobs, prepare for interviews, and suggest courses based on your skills and waiting time. What's your goal today?", sender: "bot" }
             ]);
         }
     }, [userProfile, messages.length]);
@@ -125,14 +125,14 @@ export default function ChatAgent() {
                                 <Bot size={20} color="white" />
                             </div>
                             <div>
-                                <div style={{ fontSize: '0.9rem', fontWeight: '800', color: 'white' }}>VeriJoin AI</div>
-                                <div style={{ fontSize: '0.7rem', color: '#10b981' }}>● Online & Ready to help</div>
+                                <div style={{ fontSize: '0.9rem', fontWeight: '800', color: 'white' }}>VeriJoin Gemini 3</div>
+                                <div style={{ fontSize: '0.7rem', color: '#10b981' }}>● Agent-Driven Intelligence</div>
                             </div>
                         </div>
 
                         {/* Messages Area */}
                         <div style={{ flex: 1, padding: '1rem', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                            {messages.map((msg) => (
+                            {(messages || []).map((msg) => (
                                 <div key={msg.id} style={{
                                     alignSelf: msg.sender === 'user' ? 'flex-end' : 'flex-start',
                                     maxWidth: '80%',

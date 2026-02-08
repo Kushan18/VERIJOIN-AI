@@ -9,7 +9,7 @@ import SkillDevelopment from "@/components/SkillDevelopment";
 import InterviewSimulator from "@/components/InterviewSimulator";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { BrainCircuit, CheckCircle } from "lucide-react";
+import { Brain, CheckCircle } from "lucide-react";
 
 export default function VerifyPage() {
     const [file, setFile] = useState(null);
@@ -55,8 +55,8 @@ export default function VerifyPage() {
                         exit={{ opacity: 0, y: -20 }}
                         className="text-center"
                     >
-                        <h1 className="mb-4">Start Verification</h1>
-                        <p className="text-xl mb-12" style={{ color: 'var(--text-secondary)' }}>Upload your offer letter to get instant AI-powered insights.</p>
+                        <h1 className="mb-4">Gemini 3 Trust Agent</h1>
+                        <p className="text-xl mb-12" style={{ color: 'var(--text-secondary)' }}>Multimodal offer letter understanding and agentic reasoning.</p>
                         <FileUploader onFileSelect={handleFileSelect} id="offer-letter-upload" />
                     </motion.div>
                 )}
@@ -70,10 +70,10 @@ export default function VerifyPage() {
                         className="flex flex-col items-center justify-center min-h-[400px]"
                     >
                         <div className="relative">
-                            <BrainCircuit className="w-24 h-24 animate-pulse relative z-10" style={{ color: 'var(--accent-blue)' }} />
+                            <Brain className="w-24 h-24 animate-pulse relative z-10" style={{ color: 'var(--accent-blue)' }} />
                         </div>
-                        <h2 className="mt-8 mb-2">AI is Reasoning...</h2>
-                        <p style={{ color: 'var(--text-secondary)' }}>Analyzing document structure, headers, and language patterns.</p>
+                        <h2 className="mt-8 mb-2">Gemini 3 is Reasoning...</h2>
+                        <p style={{ color: 'var(--text-secondary)' }}>Performing multimodal analysis and workflow orchestration.</p>
 
                         <div className="w-64 h-2 rounded-full mt-8 overflow-hidden relative" style={{ background: 'var(--bg-secondary)' }}>
                             <motion.div
@@ -121,7 +121,7 @@ export default function VerifyPage() {
 
                             {/* AI Post-Verification Toolkit */}
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2rem' }}>
-                                <InterviewPrep role={result.jobDetails.role} />
+                                <InterviewPrep data={result.recommendations.interviewPrep} role={result.jobDetails.role} />
                                 <OnboardingRoadmap />
                             </div>
                         </div>

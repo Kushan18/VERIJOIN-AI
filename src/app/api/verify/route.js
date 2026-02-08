@@ -13,20 +13,8 @@ export async function POST(request) {
             );
         }
 
-        // Convert file to Base64 for the AI Service
-        const arrayBuffer = await file.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
-        const base64Data = buffer.toString('base64');
-
-        const filePart = {
-            inlineData: {
-                data: base64Data,
-                mimeType: file.type || 'application/pdf', // Default to PDF if unknown, though better to grab from file
-            },
-        };
-
-        // Call the service
-        const result = await geminiService.analyzeOffer(filePart);
+        // Call the service with the file blob directly
+        const result = await geminiService.analyzeOffer(file, file.type || 'application/pdf');
 
         return NextResponse.json(result);
 

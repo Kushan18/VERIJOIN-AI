@@ -31,7 +31,7 @@ export default function MarketIntelligence() {
         fetchIntelligence();
     }, [userProfile.role]);
 
-    if (isLoading) return <IntelligenceLoading />;
+    if (isLoading || !intelligence) return <IntelligenceLoading />;
 
     return (
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
@@ -100,7 +100,8 @@ export default function MarketIntelligence() {
                         <h3 style={{ fontSize: '1.1rem', fontWeight: '800' }}>Neural Market Signals</h3>
                     </div>
                     <div style={{ display: 'grid', gap: '1rem' }}>
-                        {intelligence.trends.map((trend, i) => (
+                        {/* Debugging: {JSON.stringify(intelligence)} */}
+                        {(Array.isArray(intelligence?.trends) ? intelligence.trends : []).map((trend, i) => (
                             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px', background: 'var(--bg-primary)', padding: '12px', borderRadius: '12px', border: '1px solid var(--border-color)', transition: 'transform 0.2s ease' }} onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.02)'} onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}>
                                 <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#fbbf24', boxShadow: '0 0 8px #fbbf24' }} />
                                 <span style={{ fontSize: '0.9rem', fontWeight: '600' }}>{trend}</span>
@@ -121,7 +122,7 @@ export default function MarketIntelligence() {
                         <h3 style={{ fontSize: '1.1rem', fontWeight: '800' }}>Risk Monitoring Engine</h3>
                     </div>
                     <div style={{ display: 'grid', gap: '1rem' }}>
-                        {intelligence.alerts.map((alert, i) => (
+                        {(intelligence.alerts || []).map((alert, i) => (
                             <div key={i} style={{
                                 display: 'flex',
                                 justifyContent: 'space-between',

@@ -3,19 +3,17 @@
 import { motion } from "framer-motion";
 import { MessageCircle, FileQuestion, Lightbulb, PlayCircle } from "lucide-react";
 
-export default function InterviewPrep({ role }) {
-    const questions = [
+export default function InterviewPrep({ data, role }) {
+    const steps = data && data.length > 0 ? data : [
         {
-            q: "How would you handle a production bug in your first week?",
-            hint: "Focus on communication and following established procedures."
+            step: "Behavioral Alignment",
+            action: "Practice STAR method for leadership questions.",
+            resource: "VeriJoin Behavioral Guide"
         },
         {
-            q: "What technical problem have you solved that you're most proud of?",
-            hint: "Explain the 'Why' and 'How' behind your solution."
-        },
-        {
-            q: "Tell us about a time you disagreed with a team member.",
-            hint: "Highlight your empathy and conflict resolution skills."
+            step: "Technical Deep Dive",
+            action: "Review system design patterns for your domain.",
+            resource: "System Design Handbook"
         }
     ];
 
@@ -25,15 +23,15 @@ export default function InterviewPrep({ role }) {
                 <div style={{ padding: '0.5rem', borderRadius: '0.75rem', background: 'rgba(59, 130, 246, 0.1)' }}>
                     <MessageCircle size={24} style={{ color: 'var(--accent-blue)' }} />
                 </div>
-                <h3 style={{ fontSize: '1.5rem', fontWeight: '800', margin: 0 }}>AI Interview Prep</h3>
+                <h3 style={{ fontSize: '1.5rem', fontWeight: '800', margin: 0 }}>Gemini 3 Prep Path</h3>
             </div>
 
             <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
-                Tailored questions for your new role as a **{role}**.
+                Tailored interview preparation for your role as a **{role}**.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {questions.map((item, idx) => (
+                {steps.map((item, idx) => (
                     <motion.div
                         key={idx}
                         whileHover={{ x: 5 }}
@@ -49,9 +47,10 @@ export default function InterviewPrep({ role }) {
                     >
                         <FileQuestion size={20} style={{ color: 'var(--accent-blue)', marginTop: '0.25rem' }} />
                         <div>
-                            <p style={{ fontWeight: '700', marginBottom: '0.5rem', color: 'var(--text-primary)' }}>{item.q}</p>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', color: '#10b981' }}>
-                                <Lightbulb size={14} /> <span>Pro Tip: {item.hint}</span>
+                            <p style={{ fontWeight: '700', marginBottom: '0.25rem', color: 'var(--text-primary)' }}>{item.step}</p>
+                            <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>{item.action}</p>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.75rem', color: '#10b981' }}>
+                                <Lightbulb size={14} /> <span>Resource: {item.resource}</span>
                             </div>
                         </div>
                     </motion.div>

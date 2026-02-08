@@ -16,11 +16,25 @@ export function UserProvider({ children }) {
         isOnboarded: false
     });
 
-    // Load from localStorage if available
+    // Load from localStorage if available (client-side only)
     useEffect(() => {
-        const saved = localStorage.getItem("verijoin_user_profile");
-        if (saved) {
-            setUserProfile(JSON.parse(saved));
+        if (typeof window !== 'undefined') {
+            try {
+                const saved = localStorage.getItem("verijoin_user_profile");
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    // Simple schema validation
+                    if (parsed && typeof parsed === 'object' && Array.isArray(parsed.skills)) {
+                        setUserProfile(parsed);
+                    } else {
+                        console.warn("Invalid profile data found, resetting.");
+                        localStorage.removeItem("verijoin_user_profile");
+                    }
+                }
+            } catch (e) {
+                console.error("Failed to parse user profile:", e);
+                localStorage.removeItem("verijoin_user_profile");
+            }
         }
         setIsLoaded(true);
     }, []);
@@ -28,11 +42,15 @@ export function UserProvider({ children }) {
     const updateProfile = (newData) => {
         const updated = { ...userProfile, ...newData };
         setUserProfile(updated);
-        localStorage.setItem("verijoin_user_profile", JSON.stringify(updated));
+        if (typeof window !== 'undefined') {
+            localStorage.setItem("verijoin_user_profile", JSON.stringify(updated));
+        }
     };
 
     const resetProfile = () => {
-        localStorage.removeItem("verijoin_user_profile");
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem("verijoin_user_profile");
+        }
         setUserProfile({
             name: "",
             role: "",

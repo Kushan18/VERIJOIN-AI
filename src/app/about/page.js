@@ -2,7 +2,11 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Shield, Zap, TrendingUp, CheckCircle, ArrowRight, MousePointer2, Briefcase, GraduationCap, ShieldCheck } from "lucide-react";
+import {
+    Shield, Zap, TrendingUp, CheckCircle, ArrowRight, Brain,
+    Briefcase, GraduationCap, ShieldCheck, Heart, Cpu, Target,
+    Rocket, Lightbulb, GitBranch
+} from "lucide-react";
 
 export default function AboutPage() {
     const sectionTitleStyle = {
@@ -20,13 +24,25 @@ export default function AboutPage() {
         color: 'var(--text-secondary)'
     };
 
+    const cardStyle = {
+        background: 'var(--bg-secondary)',
+        padding: '2.5rem',
+        borderRadius: '1.5rem',
+        border: '1px solid var(--border-color)',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem'
+    };
+
     return (
-        <div style={{ minHeight: '100vh', background: 'var(--bg-primary)', paddingBottom: '80px' }}>
-            {/* Header Narrative Section */}
-            <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '100px 20px', textAlign: 'center' }}>
+        <div style={{ minHeight: '100vh', background: 'var(--bg-primary)', paddingBottom: '100px' }}>
+            {/* Hero Narrative Section */}
+            <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '120px 20px 80px', textAlign: 'center' }}>
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
                 >
                     <div style={{
                         display: 'inline-flex',
@@ -37,140 +53,171 @@ export default function AboutPage() {
                         borderRadius: '2rem',
                         color: 'var(--accent-blue)',
                         fontWeight: '800',
-                        marginBottom: '2rem'
+                        marginBottom: '2.5rem'
                     }}>
-                        <ShieldCheck size={20} /> THE VERIJOIN INTELLIGENCE SUITE
+                        <Brain size={20} /> THE VERIJOIN STORY
                     </div>
-                    <h1 style={{ fontSize: '3.5rem', fontWeight: '900', marginBottom: '2rem' }}>Comprehensive Feature Set</h1>
-                    <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', maxWidth: '800px', margin: '0 auto', lineHeight: 1.6 }}>
-                        VeriJoin isn't just a verification tool—it's an AI-driven career trust ecosystem. We help you navigate the high-risk "Waiting Period" between receiving an offer and your first day on the job.
+                    <h1 style={{ fontSize: '4.5rem', fontWeight: '900', marginBottom: '2rem', letterSpacing: '-0.04em' }}>
+                        Bridging the <span style={{ color: 'var(--accent-blue)' }}>Gap</span>
+                    </h1>
+                    <p style={{ fontSize: '1.4rem', color: 'var(--text-secondary)', maxWidth: '900px', margin: '0 auto', lineHeight: 1.6 }}>
+                        VeriJoin is an AI-powered career trust platform that verifies offer letters and actively guides users while verification is in progress.
                     </p>
                 </motion.div>
             </section>
 
-            {/* Platform Modules (Moved from Home) */}
-            <section style={{ background: 'var(--bg-secondary)', padding: '100px 20px' }}>
+            {/* Inspiration Section */}
+            <section style={{ maxWidth: '1100px', margin: '0 auto', padding: '60px 20px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '4rem', alignItems: 'center' }}>
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                    >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem', color: '#f472b6' }}>
+                            <Heart size={24} />
+                            <span style={{ fontWeight: '800', fontSize: '1.1rem', letterSpacing: '0.1em' }}>INSPIRATION</span>
+                        </div>
+                        <h2 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '1.5rem', lineHeight: 1.2 }}>Helping people during moments of <span style={{ color: '#f472b6' }}>uncertainty</span>.</h2>
+                        <div style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', lineHeight: 1.8 }}>
+                            <p style={{ marginBottom: '1.5rem' }}>
+                                Students and early-career professionals increasingly receive job and internship offers online, but many face uncertainty: fake offer letters, delayed verification, and financial pressure.
+                            </p>
+                            <p>
+                                We noticed that most platforms either verify documents or list jobs, but none support users during the waiting period. VeriJoin was inspired by the idea that AI should actively help people when anxiety and risk are highest.
+                            </p>
+                        </div>
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        style={{ background: 'linear-gradient(135deg, rgba(244, 114, 182, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%)', borderRadius: '2rem', padding: '3rem', border: '1px solid rgba(255,255,255,0.05)' }}
+                    >
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+                            {[
+                                { icon: Shield, label: "Trust First" },
+                                { icon: Rocket, label: "Career Gaps" },
+                                { icon: Target, label: "Skill Focus" },
+                                { icon: Zap, label: "Instant Value" }
+                            ].map((item, idx) => (
+                                <div key={idx} style={{ textAlign: 'center' }}>
+                                    <div style={{ width: '50px', height: '50px', background: 'rgba(255,255,255,0.05)', borderRadius: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem' }}>
+                                        <item.icon size={24} color="#f472b6" />
+                                    </div>
+                                    <span style={{ fontWeight: '700', fontSize: '0.9rem' }}>{item.label}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* How We Built It Section */}
+            <section style={{ background: 'var(--bg-secondary)', padding: '100px 20px', margin: '80px 0' }}>
                 <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-                    <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
-                        <h2 style={sectionTitleStyle}>Modular Intelligence</h2>
-                        <p style={sectionSubtitleStyle}>Four powerful keys to your professional future.</p>
+                    <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', justifyContent: 'center', marginBottom: '1rem', color: 'var(--accent-blue)' }}>
+                            <Cpu size={24} />
+                            <span style={{ fontWeight: '800', fontSize: '1.1rem', letterSpacing: '0.1em' }}>ARCHITECTURE</span>
+                        </div>
+                        <h2 style={sectionTitleStyle}>Powered by Gemini 3</h2>
+                        <p style={{ ...sectionSubtitleStyle, maxWidth: '800px', margin: '0 auto 4rem' }}>
+                            An agent-driven workflow orchestration that makes AI central to decision-making, not just content generation.
+                        </p>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
                         {[
                             {
-                                title: "Adaptive Onboarding",
-                                desc: "Synthesizes your professional identity, skills, and goals into a persistent profile that powers the entire platform.",
-                                link: "/onboarding",
-                                icon: UserIcon
+                                title: "Multimodal Analysis",
+                                desc: "Gemini 3 API analyzes offer letters for structural and meta-data authenticity while detecting hiring risks.",
+                                icon: Brain
                             },
                             {
-                                title: "AI Interview Simulator",
-                                desc: "A high-stakes, realistic environment with 20-second timers to practice FAANG-tier interviews with real-time scoring.",
-                                link: "/verify#interviews",
-                                icon: Zap
+                                title: "Workflow Orchestration",
+                                desc: "Python (FastAPI) backend handles complex logic, adapting guidance based on roles, skills, and waiting time.",
+                                icon: GitBranch
                             },
                             {
-                                title: "Market Intelligence",
-                                desc: "Real-time hiring sentiment analysis, layoff monitoring, and industry demand trends for your specific role.",
-                                link: "/intelligence",
-                                icon: TrendingUp
-                            },
-                            {
-                                title: "Advanced Strategy",
-                                desc: "Technical gap analysis comparing your skills against market standards with automated roadmap adjustments.",
-                                link: "/strategy",
-                                icon: Briefcase
+                                title: "Adaptive Recommender",
+                                desc: "Dynamically identifies verification delays to recommend courses, interview paths, and trusted part-time jobs.",
+                                icon: Lightbulb
                             }
-                        ].map((module, i) => (
+                        ].map((item, i) => (
                             <motion.div
                                 key={i}
-                                whileHover={{ scale: 1.02, y: -5 }}
-                                style={{
-                                    background: 'var(--bg-primary)',
-                                    padding: '2.5rem',
-                                    borderRadius: '1.5rem',
-                                    border: '1px solid var(--border-color)',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
-                                }}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                style={cardStyle}
                             >
-                                <h4 style={{ fontSize: '1.25rem', fontWeight: '900', marginBottom: '1rem', color: '#3b82f6' }}>{module.title}</h4>
-                                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.6, marginBottom: '2rem' }}>{module.desc}</p>
-                                <Link href={module.link} style={{ marginTop: 'auto', color: 'var(--text-primary)', fontWeight: '800', textDecoration: 'none', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                                    EXPLORE <ArrowRight size={14} />
-                                </Link>
+                                <div style={{ width: '48px', height: '48px', background: 'rgba(59, 130, 246, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
+                                    <item.icon size={24} color="var(--accent-blue)" />
+                                </div>
+                                <h3 style={{ fontSize: '1.5rem', fontWeight: '800' }}>{item.title}</h3>
+                                <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>{item.desc}</p>
                             </motion.div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Why VeriJoin? */}
-            <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '100px 20px' }}>
-                <h2 style={sectionTitleStyle}>Why VeriJoin?</h2>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.5rem', marginTop: '4rem' }}>
-                    {[
-                        {
-                            icon: Shield,
-                            color: '#3b82f6',
-                            title: "AI Trust Protocol",
-                            desc: "Leverage advanced neural networks to validate document authenticity and detect structural anomalies instantly."
-                        },
-                        {
-                            icon: Zap,
-                            color: '#fbbf24',
-                            title: "Gap Bridging",
-                            desc: "Don't just wait for your joining date. Get high-end gig recommendations and micro-internships tailored to your role."
-                        },
-                        {
-                            icon: TrendingUp,
-                            color: '#10b981',
-                            title: "Future Proofing",
-                            desc: "Get an AI-generated skills roadmap for your first 2 years in your new company based on current market trends."
-                        }
-                    ].map((feature, i) => (
-                        <div key={i} style={{ textAlign: 'center', padding: '2rem' }}>
-                            <div style={{ width: '4rem', height: '4rem', background: feature.color, borderRadius: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 2rem' }}>
-                                <feature.icon size={28} color="white" />
-                            </div>
-                            <h3 style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '1rem' }}>{feature.title}</h3>
-                            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>{feature.desc}</p>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* How It Works */}
-            <section style={{ background: 'var(--bg-secondary)', padding: '100px 20px' }}>
-                <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-                    <h2 style={sectionTitleStyle}>Workflow</h2>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '800px', margin: '4rem auto' }}>
-                        {[
-                            { id: "01", title: "Upload & Verify", desc: "Our AI scans your offer letter for authenticity and benchmarks the company health." },
-                            { id: "02", title: "Analyze Gaps", desc: "Compare your current skills against your future employer's tech stack requirements." },
-                            { id: "03", title: "Scale Up", desc: "Use the mock interview simulator and roadmap to be ready for Day 1." }
-                        ].map((step, i) => (
-                            <div key={i} style={{ display: 'flex', gap: '2rem', alignItems: 'center', background: 'var(--bg-primary)', padding: '2rem', borderRadius: '1.5rem', border: '1px solid var(--border-color)' }}>
-                                <div style={{ fontSize: '2.5rem', fontWeight: '900', opacity: 0.2 }}>{step.id}</div>
-                                <div>
-                                    <h4 style={{ fontWeight: '800', fontSize: '1.25rem' }}>{step.title}</h4>
-                                    <p style={{ color: 'var(--text-secondary)' }}>{step.desc}</p>
-                                </div>
-                            </div>
-                        ))}
+            {/* Challenges & Accomplishments Card Grid */}
+            <section style={{ maxWidth: '1200px', margin: '0 auto', padding: '60px 20px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))', gap: '2.5rem' }}>
+                    <div style={{ ...cardStyle, background: 'rgba(239, 68, 68, 0.05)', borderColor: 'rgba(239, 68, 68, 0.1)' }}>
+                        <h3 style={{ fontSize: '1.75rem', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#ef4444' }}>
+                            <Shield size={24} /> Challenges
+                        </h3>
+                        <ul style={{ color: 'var(--text-secondary)', lineHeight: 1.8, paddingLeft: '1.5rem' }}>
+                            <li>Designing a single flow combining verification, learning, and job discovery.</li>
+                            <li>Ensuring recommendations felt relevant and contextual to the user's career path.</li>
+                            <li>Avoiding feature overload while showcasing real-world usefulness.</li>
+                            <li>Maintaining public accessibility while feeling enterprise-professional.</li>
+                        </ul>
+                    </div>
+                    <div style={{ ...cardStyle, background: 'rgba(16, 185, 129, 0.05)', borderColor: 'rgba(16, 185, 129, 0.1)' }}>
+                        <h3 style={{ fontSize: '1.75rem', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#10b981' }}>
+                            <CheckCircle size={24} /> Accomplishments
+                        </h3>
+                        <ul style={{ color: 'var(--text-secondary)', lineHeight: 1.8, paddingLeft: '1.5rem' }}>
+                            <li>Built a system that supports users *during* verification delays, not just after.</li>
+                            <li>Integrated learning, earning (gigs), and prep into a single agentic flow.</li>
+                            <li>Designed VeriJoin to feel empathetic, practical, and career-focused.</li>
+                            <li>Executed a high-end Next.js 15 & FastAPI architecture in record time.</li>
+                        </ul>
                     </div>
                 </div>
             </section>
-        </div>
-    );
-}
 
-function UserIcon({ size, color }) {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user">
-            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
-        </svg>
+            {/* Future Section */}
+            <section style={{ maxWidth: '1000px', margin: '100px auto 0', padding: '80px 40px', background: 'var(--bg-secondary)', borderRadius: '3rem', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+                <div style={{ color: 'var(--accent-blue)', fontWeight: '800', marginBottom: '1.5rem', letterSpacing: '0.1em' }}>WHAT'S NEXT</div>
+                <h2 style={{ fontSize: '3rem', fontWeight: '900', marginBottom: '3rem' }}>The Future of <span style={{ color: 'var(--accent-blue)' }}>Trust</span></h2>
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem' }}>
+                    {[
+                        "Real-time Gig APIs", "University Partnerships",
+                        "Gemini Voice Coaching", "Full Dashboard Evolution",
+                        "Placement Cell Integration"
+                    ].map((item, idx) => (
+                        <div key={idx} style={{ padding: '12px 24px', background: 'var(--bg-primary)', borderRadius: '1rem', border: '1px solid var(--border-color)', fontWeight: '700', fontSize: '0.9rem' }}>
+                            {item}
+                        </div>
+                    ))}
+                </div>
+                <div style={{ marginTop: '4rem' }}>
+                    <Link href="/verify">
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            style={{ padding: '16px 40px', background: 'var(--accent-blue)', color: 'white', borderRadius: '1rem', border: 'none', fontWeight: '800', cursor: 'pointer', fontSize: '1.1rem', display: 'inline-flex', alignItems: 'center', gap: '10px' }}
+                        >
+                            START VERIFYING <ArrowRight size={20} />
+                        </motion.button>
+                    </Link>
+                </div>
+            </section>
+        </div>
     );
 }

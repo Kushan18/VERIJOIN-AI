@@ -24,27 +24,40 @@ export default function InterviewSimulator() {
         setIsLoading(true);
         setState("loading");
         try {
-            // 1. Extract Profile from Resume File (Optional but kept for "Analysing" feel)
+            // 1. Analyze Resume File
             const formData = new FormData();
             formData.append("action", "analyze_resume_file");
             formData.append("file", selectedFile);
 
-            await fetch("/api/interview", {
+            const analysisRes = await fetch("/api/interview", {
                 method: "POST",
                 body: formData
             });
+            const profile = await analysisRes.json();
 
-            // 2. Select 10 Random Questions from the 150 Bank
-            const shuffled = [...INTERVIEW_QUESTIONS].sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, 10).map((q, idx) => ({
+            // 2. Generate Real-time Questions from Backend
+            const genRes = await fetch("/api/interview", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    action: "generate_questions",
+                    data: {
+                        role: profile.role || userProfile.role || "Software Engineer",
+                        skills: profile.skills || userProfile.skills || ["React"],
+                        resumeText: "" // Text analysis is handled by backend file parsing if implemented, or we just pass the extracted profile
+                    }
+                })
+            });
+
+            const selected = await genRes.json();
+
+            setQuestions(selected.map((q, idx) => ({
                 id: idx,
                 question: q.question,
-                answer: q.answer, // Reference answer for AI scoring
-                category: "Technical",
+                answer: "Technical response expected", // Model handles the actual reference scoring
+                category: q.type || "Technical",
                 difficulty: "Medium"
-            }));
-
-            setQuestions(selected);
+            })));
             setState("session");
         } catch (error) {
             console.error("Setup failed:", error);

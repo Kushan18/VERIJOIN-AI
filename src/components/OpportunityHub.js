@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Briefcase, Zap, TrendingUp, Clock, DollarSign } from "lucide-react";
+import { Briefcase, Zap, TrendingUp, Clock, DollarSign, Brain } from "lucide-react";
 
 export default function OpportunityHub({ data }) {
     const [activeTab, setActiveTab] = useState("gigs"); // gigs, internships, future
@@ -37,13 +37,13 @@ export default function OpportunityHub({ data }) {
                 <div>
                     <h2 style={{ fontSize: '1.5rem', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
                         <Zap size={24} style={{ color: '#fbbf24' }} />
-                        Opportunity Hub
+                        Gemini 3 Opportunity Hub
                     </h2>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', margin: 0 }}>Turn your waiting time into assets.</p>
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', margin: 0 }}>Tailored agent-driven career recommendations.</p>
                 </div>
 
                 <div style={{ display: 'flex', background: 'rgba(255, 255, 255, 0.05)', padding: '4px', borderRadius: '0.75rem' }}>
-                    {["gigs", "internships", "future"].map((tab) => (
+                    {["gigs", "courses", "future"].map((tab) => (
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
@@ -77,59 +77,68 @@ export default function OpportunityHub({ data }) {
                 >
                     {activeTab === "future" ? (
                         <FutureInsightView market={data.marketOutlook} />
+                    ) : activeTab === "courses" ? (
+                        <CoursesList items={data.recommendations.courses} variants={item} />
                     ) : (
-                        <OpportunitiesList type={activeTab} items={data.recommendations[activeTab]} variants={item} />
+                        <OpportunitiesList type={activeTab} items={data.recommendations.gigs} variants={item} />
                     )}
                 </motion.div>
             </AnimatePresence>
+
+            {data.agentReasoning && (
+                <div style={{ marginTop: '2rem', padding: '1.5rem', background: 'rgba(59, 130, 246, 0.05)', border: '1px solid rgba(59, 130, 246, 0.2)', borderRadius: '1rem', position: 'relative', overflow: 'hidden' }}>
+                    <div style={{ position: 'absolute', top: 0, left: 0, height: '100%', width: '4px', background: 'var(--accent-blue)' }}></div>
+                    <h4 style={{ color: 'var(--accent-blue)', margin: '0 0 0.5rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1rem' }}>
+                        <Brain size={18} /> Gemini Reasoning
+                    </h4>
+                    <p style={{ fontSize: '0.9rem', lineHeight: '1.6', margin: 0, fontStyle: 'italic', color: 'var(--text-primary)' }}>"{data.agentReasoning}"</p>
+                </div>
+            )}
+
+            {data.verificationAnalysis?.delayDetected && (
+                <div style={{ marginTop: '2rem', padding: '1rem', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: '1rem' }}>
+                    <h4 style={{ color: '#ef4444', margin: '0 0 0.5rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <Clock size={18} /> Verification Delay Detected
+                    </h4>
+                    <p style={{ fontSize: '0.875rem', margin: 0 }}>{data.verificationAnalysis.delayReason}</p>
+                </div>
+            )}
         </div>
     );
 }
 
-function FutureInsightView({ market }) {
-    if (!market) return <p style={{ color: 'var(--text-secondary)' }}>No market data available.</p>;
+function CoursesList({ items, variants }) {
+    if (!items?.length) return <p style={{ color: 'var(--text-secondary)' }}>No recommended courses.</p>;
 
-    const cardStyle = {
-        padding: '1.5rem',
-        borderRadius: '1rem',
-        background: 'rgba(59, 130, 246, 0.05)',
-        border: '1px solid var(--border-color)'
-    };
-
-    return (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
-            <div style={cardStyle}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-                    <TrendingUp size={32} style={{ color: '#a78bfa' }} />
-                    <h3 style={{ fontSize: '1.25rem', fontWeight: '800', margin: 0 }}>2027 Outlook</h3>
+    return items.map((course, idx) => (
+        <motion.div
+            key={idx}
+            variants={variants}
+            style={{
+                padding: '1.25rem',
+                borderRadius: '0.75rem',
+                border: '1px solid var(--border-color)',
+                background: 'rgba(255, 255, 255, 0.03)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+            }}
+        >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <div style={{ background: 'rgba(59, 130, 246, 0.1)', padding: '0.75rem', borderRadius: '0.5rem' }}>
+                    <Zap size={20} style={{ color: '#60a5fa' }} />
                 </div>
-                <div style={{ fontSize: '2.5rem', fontWeight: '900', marginBottom: '0.5rem', background: 'linear-gradient(135deg, #a78bfa 0%, #f472b6 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                    {market.trend}
+                <div>
+                    <h4 style={{ fontSize: '1.125rem', fontWeight: '800', margin: 0 }}>{course.title}</h4>
+                    <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: '0.25rem 0' }}>{course.provider} • Relevance: {course.relevance}</p>
+                    {course.reason && <p style={{ fontSize: '0.75rem', color: '#10b981', margin: 0 }}>Why: {course.reason}</p>}
                 </div>
-                <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                    {market.insight}
-                </p>
             </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <h4 style={{ fontWeight: '700', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: '0.75rem', margin: 0 }}>Recommended Skills to Acquire</h4>
-                {market.futureSkills?.map((skill, idx) => (
-                    <div key={idx} style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        padding: '1rem',
-                        borderRadius: '0.75rem',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        border: '1px solid var(--border-color)'
-                    }}>
-                        <span style={{ fontWeight: '600' }}>{skill}</span>
-                        <span style={{ fontSize: '0.75rem', padding: '4px 8px', borderRadius: '4px', background: 'rgba(59, 130, 246, 0.1)', color: '#60a5fa' }}>High Demand</span>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
+            <button style={{ padding: '0.5rem 1rem', borderRadius: '0.5rem', background: 'var(--accent-blue)', color: 'white', border: 'none', cursor: 'pointer', fontSize: '0.875rem', fontWeight: '600' }}>
+                Enroll
+            </button>
+        </motion.div>
+    ));
 }
 
 function OpportunitiesList({ items, variants }) {
@@ -157,7 +166,8 @@ function OpportunitiesList({ items, variants }) {
                 </div>
                 <div>
                     <h4 style={{ fontSize: '1.125rem', fontWeight: '800', margin: 0 }}>{opp.title}</h4>
-                    <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: 0 }}>{opp.company}</p>
+                    <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: '0.25rem 0' }}>{opp.company}</p>
+                    {opp.description && <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: 0 }}>{opp.description}</p>}
                 </div>
             </div>
 

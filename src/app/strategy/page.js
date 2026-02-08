@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUser } from "@/context/UserContext";
-import { Target, Search, CheckCircle2, AlertCircle, Compass, Rocket, Calendar, ChevronRight, BrainCircuit } from "lucide-react";
+import { Target, Search, CheckCircle2, AlertCircle, Compass, Rocket, Calendar, ChevronRight, Brain } from "lucide-react";
 
 // Mock gap analysis data
 const MOCK_GAP_DATA = {
@@ -19,19 +19,43 @@ const MOCK_GAP_DATA = {
 
 export default function StrategyEngine() {
     const { userProfile } = useUser();
-    const [gapData, setGapData] = useState(MOCK_GAP_DATA);
-    const [isLoading, setIsLoading] = useState(false);
+    const [gapData, setGapData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const fetchGapAnalysis = async () => {
+        setIsLoading(true);
+        try {
+            const response = await fetch("/api/strategy", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(userProfile)
+            });
+            const data = await response.json();
+            setGapData(data);
+        } catch (error) {
+            console.error("Failed to fetch gap analysis:", error);
+            setGapData(MOCK_GAP_DATA); // Fallback
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     useEffect(() => {
-        // Data is loaded immediately with mock data
-        setIsLoading(false);
-    }, []);
+        if (userProfile.isOnboarded) {
+            fetchGapAnalysis();
+        } else {
+            setGapData(MOCK_GAP_DATA);
+            setIsLoading(false);
+        }
+    }, [userProfile]);
+
+    if (isLoading || !gapData) return <StrategyLoading />;
 
     return (
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
             <div style={{ marginBottom: '4rem' }}>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(59, 130, 246, 0.1)', padding: '8px 20px', borderRadius: '2rem', color: 'var(--accent-blue)', fontWeight: '800', fontSize: '0.875rem', textTransform: 'uppercase', marginBottom: '1.5rem' }}>
-                    <BrainCircuit size={18} /> Intelligent Strategy Engine
+                    <Brain size={18} /> Intelligent Strategy Engine
                 </div>
                 <h1 style={{ fontSize: '3rem', fontWeight: '900', letterSpacing: '-0.03em', marginBottom: '1rem' }}>Gap Analysis & Execution</h1>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '1.2rem', maxWidth: '700px' }}>

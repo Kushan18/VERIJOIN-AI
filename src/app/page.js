@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Shield, Zap, TrendingUp, CheckCircle, ArrowRight, MousePointer2, Briefcase, GraduationCap, Globe, Users, Award } from "lucide-react";
+import { Shield, Zap, TrendingUp, CheckCircle, ArrowRight, MousePointer2, Briefcase, GraduationCap, Globe, Users, Award, Brain } from "lucide-react";
 import SkillDevelopment from "@/components/SkillDevelopment";
 
 export default function Home() {
@@ -248,7 +248,3 @@ export default function Home() {
     );
 }
 
-// Simple Icon fallback since BrainCircuit was used in item list
-function BrainCircuit({ size, style }) {
-    return <Zap size={size} style={style} />;
-}
